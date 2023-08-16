@@ -168,6 +168,15 @@ Controller::Controller(mc_rbdyn::RobotModulePtr robotModule,
                                                   robot.surfacePose("LeftFootCenter"), leftFootRatio_);
                         });
 
+  datastore().make_call("doubleSupportDuration", [this]() {
+    return plan.doubleSupportDuration();
+  });
+
+  datastore().make_call("singleSupportDuration", [this]() {
+    return plan.singleSupportDuration();
+  });
+
+
   mc_rtc::log::success("LIPMWalking controller init done.");
 }
 
@@ -198,6 +207,12 @@ void Controller::addLogEntries(mc_rtc::Logger & logger)
   logger.addLogEntry("realRobot_RightFoot", [this]() { return realRobot().surfacePose("RightFoot"); });
   logger.addLogEntry("realRobot_RightFootCenter", [this]() { return realRobot().surfacePose("RightFootCenter"); });
   logger.addLogEntry("realRobot_posW", [this]() { return realRobot().posW(); });
+  logger.addLogEntry("footstepPlan", [this]() { return plan.name; });
+
+  datastore().make_call("getFootstepPlan", [this]() {return plan.name;});
+  datastore().make_call("getDoubleSupportDuration", [this]() {return plan.doubleSupportDuration();});
+  datastore().make_call("getSingleSupportDuration", [this]() {return plan.singleSupportDuration();});
+
 }
 
 void Controller::addGUIElements(std::shared_ptr<mc_rtc::gui::StateBuilder> gui)
