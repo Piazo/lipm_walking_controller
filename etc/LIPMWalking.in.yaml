@@ -1348,7 +1348,7 @@ init: LIPMWalking::Initial
 transitions:
   - [LIPMWalking::Initial, Standing, LIPMWalking::WalkFSM]
 
-Plugins: [footsteps_planner_plugin, ExternalFootstepPlannerPlugin]
+Plugins: [footsteps_planner_plugin, ExternalFootstepPlannerPlugin, AnomalyInjection, anomaly_detection]
 
 # Set realRobot's joint configuration from encoder readings
 ObserverPipelines:
